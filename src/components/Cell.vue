@@ -1,5 +1,13 @@
 <script setup lang="ts">
-const props = defineProps(["cell"]);
+const props = defineProps<{
+    cell: { marker: string } | null;
+    // Receive the cell index from the parent
+    cellPosition: number;
+}>();
+
+const emit = defineEmits<{
+    (e: "placeMarker", i: number): void;
+}>();
 </script>
 
 <template>
@@ -8,7 +16,7 @@ const props = defineProps(["cell"]);
         :class="{
             'cursor-default': props.cell !== null,
             'cursor-pointer hover:bg-blue-50/5': props.cell === null
-        }">
+        }" @click="emit('placeMarker', props.cellPosition)">
         <slot></slot>
     </span>
 </template>
