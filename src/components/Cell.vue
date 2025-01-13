@@ -12,7 +12,7 @@ const emit = defineEmits<{
 
 <template>
     <span
-        class="size-36 flex justify-center items-center border-2 rounded-lg text-8xl font-bold uppercase transition-colors ease-in"
+        class="size-32 flex justify-center items-center border-2 rounded-lg text-8xl font-bold uppercase transition-colors ease-in"
         :class="{
             'cursor-default': props.cell !== null,
             'cursor-pointer hover:bg-blue-50/5': props.cell === null

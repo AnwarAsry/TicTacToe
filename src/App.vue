@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import Cell from './components/Cell.vue';
 import type { ICellData } from './models/ICellData';
+import type { IPlayer } from './models/IPlayers';
+import PlayerForm from './components/PlayerForm.vue';
 
 const grid = ref<ICellData[] | null[]>([
 	null, null, null,
@@ -58,9 +60,18 @@ const makeMove = (index: number) => {
 	}
 }
 
+const players = ref<IPlayer[]>([])
+
+const addPlayers = (playersToAdd: IPlayer[]) => {
+	if (playersToAdd.length == 2) {
+		players.value = playersToAdd;
+	}
+}
+
 </script>
 
 <template>
+	<PlayerForm v-if="players.length !== 2" :players="players" @addPlayers="addPlayers" />
 	<section class="flex justify-center items-centers">
 		<div class="w-fit grid grid-cols-3 grid-rows-3 gap-2">
 			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
