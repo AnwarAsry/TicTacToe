@@ -72,7 +72,7 @@ const addPlayers = (playersToAdd: IPlayer[]) => {
 
 <template>
 	<PlayerForm v-if="players.length !== 2" :players="players" @addPlayers="addPlayers" />
-	<section class="flex justify-center items-centers">
+	<section v-else class="flex justify-center items-centers">
 		<div class="w-fit grid grid-cols-3 grid-rows-3 gap-2">
 			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
 				@place-marker="makeMove">
