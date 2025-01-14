@@ -4,12 +4,21 @@ import Cell from './components/Cell.vue';
 import type { ICellData } from './models/ICellData';
 import type { IPlayer } from './models/IPlayers';
 import PlayerForm from './components/PlayerForm.vue';
+import RestartButton from './components/RestartButton.vue';
 
 const grid = ref<ICellData[] | null[]>([
 	null, null, null,
 	null, null, null,
 	null, null, null
 ])
+
+// State to play again
+const playAgain = ref<boolean>(false)
+
+const players = ref<IPlayer[]>([])
+
+// State for currentPlayer
+const currentPlayer = ref("X")
 
 const checkMatch = (grid: ICellData[] | null[], a: number, b: number, c: number): boolean | null => {
 	// Check if all the cells have matching markers
@@ -39,9 +48,6 @@ const checkWinner = (grid: ICellData[] | null[]): string | null => {
 	return null;
 }
 
-// State for currentPlayer
-const currentPlayer = ref("X")
-
 // Player move
 const makeMove = (index: number) => {
 	// Prevent move if the cell is taken
@@ -52,15 +58,22 @@ const makeMove = (index: number) => {
 	// Check for a winner
 	const result = checkWinner(grid.value);
 
+	// If winner
 	if (result) {
 		console.log("win win win")
-	} else {
-		// Switch player if no winner yet
-		currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
+		playAgain.value = true;
+		return
 	}
-}
 
-const players = ref<IPlayer[]>([])
+	// If no winner and every cell is taken
+	if (grid.value.every(cell => cell !== null)) {
+		playAgain.value = true;
+		return
+	}
+
+	// Switch player if no winner yet
+	currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
+}
 
 const addPlayers = (playersToAdd: IPlayer[]) => {
 	if (playersToAdd.length == 2) {
@@ -68,16 +81,27 @@ const addPlayers = (playersToAdd: IPlayer[]) => {
 	}
 }
 
+const resetGame = () => {
+	// Clear the grid
+	grid.value = Array(9).fill(null);
+	// Change to starting player
+	currentPlayer.value = 'X';
+	// Reset the play again button state
+	playAgain.value = false;
+}
+
 </script>
 
 <template>
 	<PlayerForm v-if="players.length !== 2" :players="players" @addPlayers="addPlayers" />
-	<section v-else class="flex justify-center items-centers">
+	<section v-else class="flex flex-col items-center gap-12">
 		<div class="w-fit grid grid-cols-3 grid-rows-3 gap-2">
 			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
 				@place-marker="makeMove">
 				{{ cell?.marker }}
 			</Cell>
 		</div>
+
+		<RestartButton v-if="playAgain" @reset-game="resetGame" />
 	</section>
 </template>
