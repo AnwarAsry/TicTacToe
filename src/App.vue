@@ -95,7 +95,7 @@ const resetGame = () => {
 <template>
 	<PlayerForm v-if="players.length !== 2" :players="players" @addPlayers="addPlayers" />
 	<section v-else class="flex flex-col items-center gap-12">
-		<div class="w-fit grid grid-cols-3 grid-rows-3 gap-2">
+		<div class="w-fit grid grid-cols-3 grid-rows-3 gap-4">
 			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
 				@place-marker="makeMove">
 				{{ cell?.marker }}

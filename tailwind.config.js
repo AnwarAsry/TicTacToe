@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        'cell': 'inset 0 -8px 0 #10212a',
+      } 
+    },
   },
   plugins: [],
 }
