@@ -95,6 +95,7 @@ const resetGame = () => {
 <template>
 	<PlayerForm v-if="players.length !== 2" :players="players" @addPlayers="addPlayers" />
 	<section v-else class="flex flex-col items-center gap-12">
+		<p class="px-5 py-2 text-2xl font-semibold rounded-lg bg-gray-500">{{ currentPlayer }} TURN</p>
 		<div class="w-fit p-3 grid grid-cols-3 grid-rows-3 gap-3 rounded-3xl bg-[#268AFF] shadow-lg">
 			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
 				@place-marker="makeMove">
