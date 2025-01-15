@@ -6,9 +6,6 @@ export default {
   ],
   theme: {
     extend: {
-      boxShadow: {
-        'cell': 'inset 0 -8px 0 #10212a',
-      } 
     },
   },
   plugins: [],

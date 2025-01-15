@@ -29,7 +29,7 @@ const handleSubmit = () => {
             <PlayerInput label="Enter Player name for: O" v-model="playerTwoInp" />
         </div>
         <button type="submit"
-            class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded-lg">
+            class="px-5 py-3 rounded-full text-white font-bold bg-[#268AFF] cursor-pointer transition-all ease-in hover:bg-[#1e6ecc]">
             Start Game
         </button>
     </form>

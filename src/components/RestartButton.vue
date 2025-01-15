@@ -7,7 +7,7 @@ const emit = defineEmits<{
 
 <template>
     <button
-        class="px-4 py-2 rounded-lg border-b-4 border-blue-700 text-white font-bold bg-blue-500 hover:bg-blue-400 hover:border-blue-500"
+        class="px-5 py-3 rounded-full text-white font-bold bg-[#268AFF] cursor-pointer transition-all ease-in hover:bg-[#1e6ecc]"
         @click="emit('resetGame')">
         Play again
     </button>
