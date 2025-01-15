@@ -11,12 +11,10 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <span
-        class="size-32 flex justify-center items-center border-2 rounded-lg text-8xl font-bold uppercase transition-colors ease-in"
-        :class="{
-            'cursor-default': props.cell !== null,
-            'cursor-pointer hover:bg-blue-50/5': props.cell === null
-        }" @click="emit('placeMarker', props.cellPosition)">
+    <span class="size-32 flex justify-center items-center rounded-3xl bg-blue-950" :class="{
+        'cursor-default': props.cell !== null,
+        'cursor-pointer': props.cell === null
+    }" @click="emit('placeMarker', props.cellPosition)">
         <slot></slot>
     </span>
 </template>
