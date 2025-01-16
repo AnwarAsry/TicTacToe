@@ -5,6 +5,7 @@ import type { ICellData } from './models/ICellData';
 import type { IPlayer } from './models/IPlayers';
 import PlayerForm from './components/PlayerForm.vue';
 import RestartButton from './components/RestartButton.vue';
+import XMarker from './components/XMarker.vue';
 
 const grid = ref<ICellData[] | null[]>([
 	null, null, null,
@@ -99,7 +100,7 @@ const resetGame = () => {
 		<div class="w-fit p-3 grid grid-cols-3 grid-rows-3 gap-3 rounded-3xl bg-[#268AFF] shadow-lg">
 			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
 				@place-marker="makeMove">
-				{{ cell?.marker }}
+				<XMarker v-if="cell?.marker === 'X'" />
 			</Cell>
 		</div>
 
