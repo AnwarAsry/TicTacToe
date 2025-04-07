@@ -1,4 +1,4 @@
 export interface ICellData {
-    // playerID: string
+    playerID: number
     marker: string
 }

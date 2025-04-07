@@ -20,7 +20,7 @@ const playAgain = ref<boolean>(false)
 const players = ref<IPlayer[]>([])
 
 // State for currentPlayer
-const currentPlayer = ref("X")
+const currentPlayer = ref<IPlayer | null>(null)
 
 const checkMatch = (grid: ICellData[] | null[], a: number, b: number, c: number): boolean | null => {
 	// Check if all the cells have matching markers
@@ -40,7 +40,6 @@ const checkWinner = (grid: ICellData[] | null[]): string | null => {
 
 		// If they have same markers
 		if (checkMatch(grid, a, b, c)) {
-			console.log("winner");
 			// Win
 			return grid[a]?.marker!
 		}
@@ -58,14 +57,13 @@ const makeMove = (index: number) => {
 	// Prevent move if the cell is taken
 	if (grid.value[index] !== null) return;
 	// Set the cell to the current player's marker
-	grid.value[index] = { marker: currentPlayer.value };
+	grid.value[index] = { playerID: currentPlayer.value!.id, marker: currentPlayer.value!.marker };
 
 	// Check for a winner
 	const result = checkWinner(grid.value);
 
 	// If winner
 	if (result) {
-		console.log("win win win")
 		playAgain.value = true;
 		return
 	}
@@ -77,12 +75,16 @@ const makeMove = (index: number) => {
 	}
 
 	// Switch player if no winner yet
-	currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
+	currentPlayer.value = currentPlayer.value!.marker === 'X'
+  	? players.value.find(p => p.marker === 'O')!
+  	: players.value.find(p => p.marker === 'X')!;
 }
 
 const addPlayers = (playersToAdd: IPlayer[]) => {
-	if (playersToAdd.length == 2) {
+	if (playersToAdd.length === 2) {
 		players.value = playersToAdd;
+
+		currentPlayer.value = playersToAdd[0]
 	}
 }
 
@@ -90,7 +92,7 @@ const resetGame = () => {
 	// Clear the grid
 	grid.value = Array(9).fill(null);
 	// Change to starting player
-	currentPlayer.value = 'X';
+	currentPlayer.value = players.value[0];
 	// Reset the play again button state
 	playAgain.value = false;
 }
@@ -98,9 +100,12 @@ const resetGame = () => {
 </script>
 
 <template>
-	<PlayerForm v-if="players.length !== 2" :players="players" @addPlayers="addPlayers" />
+	<PlayerForm v-if="players.length !== 2" @addPlayers="addPlayers" />
 	<section v-else class="flex flex-col items-center gap-12">
-		<p class="px-5 py-2 text-2xl font-semibold rounded-lg bg-gray-500">{{ currentPlayer }} TURN</p>
+		<p class="px-5 py-2 text-2xl font-semibold rounded-lg bg-gray-500">
+			{{ currentPlayer?.name }}'s TURN ({{ currentPlayer?.marker }})
+		</p>
+
 		<div class="w-fit p-3 grid grid-cols-3 grid-rows-3 gap-3 rounded-3xl bg-[#268AFF] shadow-lg">
 			<Cell 
 				v-for="(cell, index) in grid"
