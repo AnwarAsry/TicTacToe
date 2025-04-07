@@ -16,7 +16,8 @@ const handleSubmit = () => {
         return
     }
 
-    emit("addPlayers", [{ id: 1, name: playerOneInp.value }, { id: 2, name: playerTwoInp.value }])
+    emit("addPlayers", [{ id: 1, name: playerOneInp.value, marker: "X" }, { id: 2, name: playerTwoInp.value, marker: "O" }])
+    
     playerOneInp.value = "";
     playerTwoInp.value = "";
 };
