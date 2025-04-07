@@ -52,6 +52,9 @@ const checkWinner = (grid: ICellData[] | null[]): string | null => {
 
 // Player move
 const makeMove = (index: number) => {
+	// Prevent anymore moves
+	if (playAgain.value) return
+
 	// Prevent move if the cell is taken
 	if (grid.value[index] !== null) return;
 	// Set the cell to the current player's marker
@@ -99,8 +102,14 @@ const resetGame = () => {
 	<section v-else class="flex flex-col items-center gap-12">
 		<p class="px-5 py-2 text-2xl font-semibold rounded-lg bg-gray-500">{{ currentPlayer }} TURN</p>
 		<div class="w-fit p-3 grid grid-cols-3 grid-rows-3 gap-3 rounded-3xl bg-[#268AFF] shadow-lg">
-			<Cell v-for="(cell, index) in grid" :key="index" :cell="cell" :cellPosition="index"
-				@place-marker="makeMove">
+			<Cell 
+				v-for="(cell, index) in grid"
+				:key="index"
+				:cell="cell"
+				:gameOver="playAgain"
+				:cellPosition="index"
+				@place-marker="makeMove"
+			>
 				<XMarker v-if="cell?.marker === 'X'" />
 				<OMarker v-if="cell?.marker === 'O'" />
 			</Cell>
