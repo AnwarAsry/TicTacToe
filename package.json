@@ -1,12 +1,12 @@
 {
   "name": "tictactoe",
-  "private": true,
-  "homepage": "https://anwarasry.github.io/tictactoe",
+  "private": false,
+  "homepage": "https://anwarasry.github.io/TicTacToe",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
